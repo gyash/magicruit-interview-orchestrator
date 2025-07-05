@@ -16,6 +16,7 @@ import {
   Sparkles
 } from "lucide-react";
 import magicRuitLogo from "@/assets/magicruit-logo.png";
+import { NotificationDropdown } from "./NotificationDropdown";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home, description: "Overview & insights" },
@@ -83,9 +84,7 @@ export default function Layout({ children }: LayoutProps) {
 
             {/* Header Actions */}
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon">
-                <Bell className="h-4 w-4" />
-              </Button>
+              <NotificationDropdown />
               
               {/* Mobile menu button */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
