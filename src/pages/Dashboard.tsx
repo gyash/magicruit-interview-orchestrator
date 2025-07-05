@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Calendar, Clock, Users, TrendingUp, Search, Filter, Eye, Edit } from "lucide-react";
+import { Calendar, Clock, Users, TrendingUp, Search, Filter, Eye, Edit, Plus, ArrowRight, AlertCircle, CheckCircle, Zap, BarChart3, Settings, Workflow } from "lucide-react";
 import { mockInterviews, mockCandidates, mockJobs, getCandidateById, getJobById, formatInterviewerName } from "@/lib/mockData";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
@@ -17,6 +19,17 @@ const Dashboard = () => {
   const scheduledInterviews = mockInterviews.filter(i => i.status === 'scheduled').length;
   const pendingInterviews = mockInterviews.filter(i => i.status === 'pending').length;
   const autoScheduleRate = Math.round((scheduledInterviews / totalInterviews) * 100);
+
+  // Get upcoming interviews (next 3 days)
+  const upcomingInterviews = mockInterviews
+    .filter(i => i.status === 'scheduled')
+    .filter(i => {
+      const interviewDate = new Date(i.scheduled_time);
+      const threeDaysFromNow = new Date();
+      threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
+      return interviewDate <= threeDaysFromNow;
+    })
+    .slice(0, 4);
 
   // Filter interviews
   const filteredInterviews = mockInterviews.filter(interview => {
@@ -61,7 +74,7 @@ const Dashboard = () => {
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
           <p className="text-muted-foreground">Monitor your recruitment coordination activities</p>
         </div>
-        <Button className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90">
+        <Button className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90" onClick={() => navigate('/schedule')}>
           <Calendar className="h-4 w-4 mr-2" />
           Schedule New Interview
         </Button>
@@ -114,6 +127,164 @@ const Dashboard = () => {
         </Card>
       </div>
 
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/schedule')}>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-brand-primary/10 rounded-lg">
+                <Plus className="h-5 w-5 text-brand-primary" />
+              </div>
+              <div>
+                <h3 className="font-medium">Schedule Interview</h3>
+                <p className="text-sm text-muted-foreground">Create new interview</p>
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/workflow')}>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-success/10 rounded-lg">
+                <Workflow className="h-5 w-5 text-success" />
+              </div>
+              <div>
+                <h3 className="font-medium">Build Workflow</h3>
+                <p className="text-sm text-muted-foreground">Create interview process</p>
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/analytics')}>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-warning/10 rounded-lg">
+                <BarChart3 className="h-5 w-5 text-warning" />
+              </div>
+              <div>
+                <h3 className="font-medium">View Analytics</h3>
+                <p className="text-sm text-muted-foreground">Performance insights</p>
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/settings')}>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-secondary/10 rounded-lg">
+                <Settings className="h-5 w-5 text-secondary" />
+              </div>
+              <div>
+                <h3 className="font-medium">System Settings</h3>
+                <p className="text-sm text-muted-foreground">Configure system</p>
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Upcoming Interviews & System Health */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Upcoming Interviews */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                Upcoming Interviews
+              </CardTitle>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/interviews')}>
+                View All <ArrowRight className="h-3 w-3 ml-1" />
+              </Button>
+            </div>
+            <CardDescription>Next few interviews in your schedule</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {upcomingInterviews.map((interview) => {
+                const candidate = getCandidateById(interview.candidate_id);
+                const job = getJobById(interview.job_id);
+                return (
+                  <div key={interview.id} className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-brand-primary"></div>
+                      <div>
+                        <div className="font-medium text-sm">{candidate?.name}</div>
+                        <div className="text-xs text-muted-foreground">{job?.title} • {interview.stage_name}</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xs font-medium">{formatDate(interview.scheduled_time)}</div>
+                      <div className="text-xs text-muted-foreground">{interview.duration_mins} min</div>
+                    </div>
+                  </div>
+                );
+              })}
+              {upcomingInterviews.length === 0 && (
+                <div className="text-center py-4 text-muted-foreground">
+                  <Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">No upcoming interviews</p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* System Health */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Zap className="h-5 w-5" />
+              System Health
+            </CardTitle>
+            <CardDescription>Current system status and alerts</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-success/10 border border-success/20 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <CheckCircle className="h-4 w-4 text-success" />
+                  <span className="text-sm font-medium">Auto-Scheduling</span>
+                </div>
+                <Badge variant="outline" className="text-success border-success">Online</Badge>
+              </div>
+
+              <div className="flex items-center justify-between p-3 bg-success/10 border border-success/20 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <CheckCircle className="h-4 w-4 text-success" />
+                  <span className="text-sm font-medium">Calendar Integration</span>
+                </div>
+                <Badge variant="outline" className="text-success border-success">Connected</Badge>
+              </div>
+
+              <div className="flex items-center justify-between p-3 bg-warning/10 border border-warning/20 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <AlertCircle className="h-4 w-4 text-warning" />
+                  <span className="text-sm font-medium">Pending Actions</span>
+                </div>
+                <Badge variant="outline" className="text-warning border-warning">{pendingInterviews} items</Badge>
+              </div>
+
+              <div className="p-3 bg-muted/50 rounded-lg">
+                <div className="text-sm font-medium mb-2">Recent Activity</div>
+                <div className="space-y-1 text-xs text-muted-foreground">
+                  <div>• 3 interviews auto-scheduled today</div>
+                  <div>• 1 workflow template created</div>
+                  <div>• 2 calendar conflicts resolved</div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Interview Table */}
       <Card>
         <CardHeader>
@@ -124,6 +295,10 @@ const Dashboard = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-2">
+              <Button variant="outline" size="sm" onClick={() => navigate('/interviews')}>
+                View All <ArrowRight className="h-3 w-3 ml-1" />
+              </Button>
+              
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -165,7 +340,7 @@ const Dashboard = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredInterviews.map((interview) => {
+                {filteredInterviews.slice(0, 5).map((interview) => {
                   const candidate = getCandidateById(interview.candidate_id);
                   const job = getJobById(interview.job_id);
                   
@@ -223,7 +398,6 @@ const Dashboard = () => {
           </div>
         </CardContent>
       </Card>
-
     </div>
   );
 };
