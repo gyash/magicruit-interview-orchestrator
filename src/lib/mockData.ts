@@ -16,6 +16,7 @@ export interface WorkflowStage {
   buffer_before_mins: number;
   buffer_after_mins: number;
   notes?: string;
+  isATSGenerated?: boolean;
 }
 
 export interface Workflow {

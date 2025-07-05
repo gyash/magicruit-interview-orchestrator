@@ -27,6 +27,58 @@ const WorkflowBuilder = () => {
   const [selectedJobId, setSelectedJobId] = useState("");
   const [activeTab, setActiveTab] = useState("select-job");
   const [stages, setStages] = useState<WorkflowStage[]>([]);
+  const [atsImportedStages, setAtsImportedStages] = useState<WorkflowStage[]>([]);
+
+  // Mock ATS imported stages based on job selection
+  const getATSStagesForJob = (jobId: string): WorkflowStage[] => {
+    const baseStages = [
+      {
+        id: `ats-phone-screening`,
+        stage_name: "Phone Screening",
+        interviewers: ["recruiter@company.com"],
+        duration_mins: 30,
+        mode: "Phone" as any,
+        buffer_before_mins: 5,
+        buffer_after_mins: 5,
+        notes: "Initial screening call - ATS Generated",
+        isATSGenerated: true
+      },
+      {
+        id: `ats-technical-interview`,
+        stage_name: "Technical Interview",
+        interviewers: ["tech.lead@company.com"],
+        duration_mins: 60,
+        mode: "Google Meet" as any,
+        buffer_before_mins: 10,
+        buffer_after_mins: 10,
+        notes: "Technical assessment - ATS Generated",
+        isATSGenerated: true
+      },
+      {
+        id: `ats-final-interview`,
+        stage_name: "Final Interview",
+        interviewers: ["hiring.manager@company.com"],
+        duration_mins: 45,
+        mode: "Google Meet" as any,
+        buffer_before_mins: 5,
+        buffer_after_mins: 5,
+        notes: "Final decision interview - ATS Generated",
+        isATSGenerated: true
+      }
+    ];
+    
+    return baseStages;
+  };
+
+  const loadATSStages = (jobId: string) => {
+    const importedStages = getATSStagesForJob(jobId);
+    setAtsImportedStages(importedStages);
+    setStages(importedStages); // Pre-populate with ATS stages
+    toast({
+      title: "ATS Stages Loaded",
+      description: `${importedStages.length} interview stages imported from ATS`,
+    });
+  };
 
   const addStage = () => {
     const newStage: WorkflowStage = {
@@ -165,7 +217,10 @@ const WorkflowBuilder = () => {
               {selectedJobId && (
                 <div className="flex justify-end">
                   <Button 
-                    onClick={() => setActiveTab("define-workflow")}
+                    onClick={() => {
+                      loadATSStages(selectedJobId);
+                      setActiveTab("define-workflow");
+                    }}
                     className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90"
                   >
                     Continue to Workflow
@@ -179,41 +234,101 @@ const WorkflowBuilder = () => {
 
         {/* Tab 2: Define Workflow */}
         <TabsContent value="define-workflow">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Define Interview Stages</CardTitle>
-                  <CardDescription>
-                    Create structured interview stages for {selectedJob?.title}
-                  </CardDescription>
-                </div>
-                <Button onClick={addStage} variant="outline">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Stage
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {stages.map((stage, index) => (
-                  <Card key={stage.id} className="relative">
-                    <CardHeader className="pb-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <GripVertical className="h-5 w-5 text-muted-foreground cursor-move" />
-                          <Badge variant="outline">Stage {index + 1}</Badge>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => deleteStage(stage.id)}
-                          className="text-destructive hover:text-destructive"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+          <div className="space-y-6">
+            {/* ATS Import Notification */}
+            {atsImportedStages.length > 0 && (
+              <Card className="border-blue-200 bg-blue-50/50">
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
+                      <div>
+                        <h4 className="font-medium text-blue-900">ATS Workflow Imported</h4>
+                        <p className="text-sm text-blue-700 mt-1">
+                          {atsImportedStages.length} interview stages have been automatically imported from your ATS. 
+                          You can edit, delete, or add new stages as needed.
+                        </p>
                       </div>
-                    </CardHeader>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => {
+                          const customStages = stages.filter(s => !s.isATSGenerated);
+                          setStages(customStages);
+                          toast({
+                            title: "ATS Stages Removed",
+                            description: "All ATS-imported stages have been removed. You can start fresh.",
+                          });
+                        }}
+                      >
+                        Remove All ATS Stages
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => {
+                          setStages([...atsImportedStages]);
+                          toast({
+                            title: "Workflow Reset",
+                            description: "Workflow has been reset to original ATS stages.",
+                          });
+                        }}
+                      >
+                        Reset to ATS Default
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Define Interview Stages</CardTitle>
+                    <CardDescription>
+                      Customize interview stages for {selectedJob?.title}
+                      {atsImportedStages.length > 0 && (
+                        <span className="block text-blue-600 text-sm mt-1">
+                          ✓ {atsImportedStages.length} stages imported from ATS
+                        </span>
+                      )}
+                    </CardDescription>
+                  </div>
+                  <Button onClick={addStage} variant="outline">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Custom Stage
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {stages.map((stage, index) => (
+                    <Card key={stage.id} className={`relative ${stage.isATSGenerated ? 'border-blue-200 bg-blue-50/30' : ''}`}>
+                      <CardHeader className="pb-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <GripVertical className="h-5 w-5 text-muted-foreground cursor-move" />
+                            <Badge variant="outline">Stage {index + 1}</Badge>
+                            {stage.isATSGenerated && (
+                              <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
+                                ATS Import
+                              </Badge>
+                            )}
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => deleteStage(stage.id)}
+                            className="text-destructive hover:text-destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
@@ -357,6 +472,7 @@ const WorkflowBuilder = () => {
               </div>
             </CardContent>
           </Card>
+          </div>
         </TabsContent>
 
         {/* Tab 3: Preview & Save */}
