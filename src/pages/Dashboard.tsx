@@ -11,6 +11,7 @@ import PanelistLoadChart from "@/components/PanelistLoadChart";
 import EdgeCaseAlerts from "@/components/EdgeCaseAlerts";
 import ATSSyncManager from "@/components/ATSSyncManager";
 import MultiChannelMessaging from "@/components/MultiChannelMessaging";
+import ConflictResolutionManager from "@/components/ConflictResolutionManager";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -239,6 +240,9 @@ const Dashboard = () => {
       <MultiChannelMessaging 
         interview={mockInterviews[0]}
       />
+
+      {/* Conflict Resolution */}
+      <ConflictResolutionManager />
 
       {/* Panelist Load Analytics */}
       <PanelistLoadChart />

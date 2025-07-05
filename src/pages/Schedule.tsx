@@ -14,6 +14,8 @@ import BulkScheduling from "@/components/BulkScheduling";
 import SmartLinkGenerator from "@/components/SmartLinkGenerator";
 import AvailabilityEngine from "@/components/AvailabilityEngine";
 import NotificationSystem from "@/components/NotificationSystem";
+import PriorityEngine from "@/components/PriorityEngine";
+import InterviewerLoadBalancer from "@/components/InterviewerLoadBalancer";
 
 const Schedule = () => {
   const { toast } = useToast();
@@ -421,6 +423,12 @@ const Schedule = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Milestone 4 - Priority Engine */}
+      <PriorityEngine />
+
+      {/* Interviewer Load Balancing */}  
+      <InterviewerLoadBalancer />
 
       {/* Milestone 1 Components */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
