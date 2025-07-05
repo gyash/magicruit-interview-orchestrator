@@ -29,7 +29,6 @@ const getNavigationItems = (isCoordinator: boolean, isRecruiter: boolean) => {
     { name: "Interviews", href: "/interviews", icon: Users, description: "Manage all interviews" },
     { name: "Workflow Builder", href: "/workflow", icon: Workflow, description: "Create processes" },
     { name: "Analytics", href: "/analytics", icon: BarChart3, description: "Performance metrics" },
-    { name: "Settings", href: "/settings", icon: Settings, description: "System configuration" },
   ];
 };
 
