@@ -105,6 +105,20 @@ const Schedule = () => {
           <p className="text-muted-foreground">
             Let AI handle the coordination while you focus on finding great talent. Average scheduling time: <strong>2.3 minutes</strong>
           </p>
+          <div className="flex items-center gap-4 mt-3">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-success"></div>
+              <span className="text-xs text-muted-foreground">Step 1: Select Job & Candidate</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-muted"></div>
+              <span className="text-xs text-muted-foreground">Step 2: AI finds best times</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-muted"></div>
+              <span className="text-xs text-muted-foreground">Step 3: Send invites</span>
+            </div>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <Badge variant="outline" className="flex items-center gap-2 bg-success/10 text-success border-success">

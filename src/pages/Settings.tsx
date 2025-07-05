@@ -108,17 +108,14 @@ const SettingsPage = () => {
 
       <Tabs defaultValue="integrations" className="space-y-6">
         <div className="overflow-x-auto">
-          <TabsList className="grid w-full min-w-max grid-cols-10 gap-1">
-            <TabsTrigger value="integrations" className="text-xs">Integrations</TabsTrigger>
-            <TabsTrigger value="system" className="text-xs">System</TabsTrigger>
-            <TabsTrigger value="access" className="text-xs">Access</TabsTrigger>
-            <TabsTrigger value="notifications" className="text-xs">Notifications</TabsTrigger>
-            <TabsTrigger value="emails" className="text-xs">📧 Email Builder</TabsTrigger>
-            <TabsTrigger value="candidate" className="text-xs">Candidate UX</TabsTrigger>
-            <TabsTrigger value="compliance" className="text-xs">Compliance</TabsTrigger>
-            <TabsTrigger value="templates" className="text-xs">Templates</TabsTrigger>
-            <TabsTrigger value="reporting" className="text-xs">Reporting</TabsTrigger>
-            <TabsTrigger value="admin" className="text-xs">Admin</TabsTrigger>
+          <TabsList className="grid w-full min-w-max grid-cols-7 gap-1">
+            <TabsTrigger value="integrations" className="text-xs">🔗 Integrations</TabsTrigger>
+            <TabsTrigger value="system" className="text-xs">⚙️ System & AI</TabsTrigger>
+            <TabsTrigger value="communications" className="text-xs">📧 Communications</TabsTrigger>
+            <TabsTrigger value="access" className="text-xs">🔐 Access & Security</TabsTrigger>
+            <TabsTrigger value="workflows" className="text-xs">🎯 Workflows & Templates</TabsTrigger>
+            <TabsTrigger value="analytics" className="text-xs">📊 Analytics & Reports</TabsTrigger>
+            <TabsTrigger value="admin" className="text-xs">👑 Admin</TabsTrigger>
           </TabsList>
         </div>
 
@@ -138,42 +135,36 @@ const SettingsPage = () => {
           />
         </TabsContent>
 
-        {/* Access Control Tab */}
+        {/* Communications Tab - Combines notifications, emails, and candidate experience */}
+        <TabsContent value="communications">
+          <div className="space-y-6">
+            <div className="grid gap-6">
+              <EmailTemplatesTab />
+              <NotificationsTab />
+              <CandidateExperienceTab />
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Access & Security Tab - Combines access control and compliance */}
         <TabsContent value="access">
-          <AccessControlTab 
-            accessControl={accessControl}
-            setAccessControl={setAccessControl}
-          />
+          <div className="space-y-6">
+            <AccessControlTab 
+              accessControl={accessControl}
+              setAccessControl={setAccessControl}
+            />
+            <ComplianceSecurityTab />
+          </div>
         </TabsContent>
 
-        {/* Notifications Tab */}
-        <TabsContent value="notifications">
-          <NotificationsTab />
-        </TabsContent>
-
-        {/* Candidate Experience Tab */}
-        <TabsContent value="candidate">
-          <CandidateExperienceTab />
-        </TabsContent>
-
-        {/* Compliance & Security Tab */}
-        <TabsContent value="compliance">
-          <ComplianceSecurityTab />
-        </TabsContent>
-
-        {/* Workflow Templates Tab */}
-        <TabsContent value="templates">
+        {/* Workflows & Templates Tab */}
+        <TabsContent value="workflows">
           <WorkflowTemplatesTab />
         </TabsContent>
 
-        {/* Reporting Configuration Tab */}
-        <TabsContent value="reporting">
+        {/* Analytics & Reports Tab */}
+        <TabsContent value="analytics">
           <ReportingConfigTab />
-        </TabsContent>
-
-        {/* Email Templates Tab - Moved to prominent position */}
-        <TabsContent value="emails">
-          <EmailTemplatesTab />
         </TabsContent>
 
         {/* Master Admin Tab */}

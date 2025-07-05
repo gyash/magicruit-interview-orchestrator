@@ -189,6 +189,42 @@ const WorkflowBuilder = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
+              {/* Getting Started Guide */}
+              {!selectedJobId && (
+                <div className="border-dashed border-2 border-muted-foreground/25 rounded-lg p-8 text-center mb-6">
+                  <div className="p-4 bg-muted/50 rounded-full w-fit mx-auto mb-4">
+                    <Users className="h-12 w-12 text-muted-foreground" />
+                  </div>
+                  
+                  <h3 className="text-lg font-semibold mb-2">Create Your First Interview Workflow</h3>
+                  <p className="text-muted-foreground max-w-md mx-auto mb-6">
+                    Design standardized interview processes that ensure consistency and quality across all hiring decisions. Save hours of coordination time!
+                  </p>
+                  
+                  <div className="w-full max-w-md mx-auto">
+                    <div className="text-sm font-medium mb-3 text-left">💡 Getting Started Tips:</div>
+                    <div className="space-y-2 text-sm text-muted-foreground text-left">
+                      <div className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-brand-primary mt-2 flex-shrink-0"></div>
+                        <span>Select a job position below to get started</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-brand-primary mt-2 flex-shrink-0"></div>
+                        <span>Import existing stages from your ATS automatically</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-brand-primary mt-2 flex-shrink-0"></div>
+                        <span>Customize stages, assign interviewers, set durations</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-brand-primary mt-2 flex-shrink-0"></div>
+                        <span>Save and activate for AI-powered scheduling</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {mockJobs.map((job) => (
                   <Card 
