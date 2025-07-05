@@ -51,8 +51,8 @@ serve(async (req) => {
       throw new Error('Not authenticated')
     }
 
-    const { action, ...params } = await req.json()
-    const greenhouseApiKey = Deno.env.get('GREENHOUSE_API_KEY')
+    const { action, apiKey, ...params } = await req.json()
+    const greenhouseApiKey = apiKey || Deno.env.get('GREENHOUSE_API_KEY')
     
     if (!greenhouseApiKey) {
       throw new Error('Greenhouse API key not configured')

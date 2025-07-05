@@ -39,7 +39,7 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
 
     try {
       const { data, error } = await supabase.functions.invoke('greenhouse-sync', {
-        body: { action: 'test-connection' }
+        body: { action: 'test-connection', apiKey: greenhouseApiKey }
       });
 
       if (error) throw error;
@@ -74,7 +74,7 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
 
     try {
       const { data, error } = await supabase.functions.invoke('greenhouse-sync', {
-        body: { action }
+        body: { action, apiKey: greenhouseApiKey }
       });
 
       if (error) throw error;
