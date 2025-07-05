@@ -11,6 +11,7 @@ import { mockInterviews, mockCandidates, mockJobs, getCandidateById, getJobById,
 import RescheduleFlow from "@/components/RescheduleFlow";
 import NoShowDetector from "@/components/NoShowDetector";
 import SmartSwapManager from "@/components/SmartSwapManager";
+import LifecycleManager from "@/components/LifecycleManager";
 
 const Interviews = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -367,6 +368,9 @@ const Interviews = () => {
         isOpen={!!rescheduleInterview}
         onClose={() => setRescheduleInterview(null)}
       />
+
+      {/* Interview Lifecycle Management */}
+      <LifecycleManager />
     </div>
   );
 };

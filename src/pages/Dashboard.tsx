@@ -7,14 +7,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Calendar, Clock, Users, TrendingUp, Search, Filter, Eye, Edit } from "lucide-react";
 import { mockInterviews, mockCandidates, mockJobs, getCandidateById, getJobById, formatInterviewerName } from "@/lib/mockData";
-import PanelistLoadChart from "@/components/PanelistLoadChart";
-import EdgeCaseAlerts from "@/components/EdgeCaseAlerts";
-import ATSSyncManager from "@/components/ATSSyncManager";
-import MultiChannelMessaging from "@/components/MultiChannelMessaging";
-import ConflictResolutionManager from "@/components/ConflictResolutionManager";
-import LifecycleManager from "@/components/LifecycleManager";
-import RoleEligibilityFramework from "@/components/RoleEligibilityFramework";
-import V2Planning from "@/components/V2Planning";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -232,35 +224,6 @@ const Dashboard = () => {
         </CardContent>
       </Card>
 
-      {/* ATS Integration */}
-      <ATSSyncManager 
-        onDataSynced={(data) => {
-          console.log("ATS Data synced:", data);
-        }}
-      />
-
-      {/* Communication Center */}
-      <MultiChannelMessaging 
-        interview={mockInterviews[0]}
-      />
-
-      {/* Milestone 5 - Lifecycle Management */}
-      <LifecycleManager />
-
-      {/* Role Eligibility Framework */}
-      <RoleEligibilityFramework />
-
-      {/* V2 Planning */}
-      <V2Planning />
-
-      {/* Conflict Resolution */}
-      <ConflictResolutionManager />
-
-      {/* Panelist Load Analytics */}
-      <PanelistLoadChart />
-
-      {/* Edge Case Management */}
-      <EdgeCaseAlerts />
     </div>
   );
 };

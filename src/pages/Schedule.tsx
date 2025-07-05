@@ -16,6 +16,7 @@ import AvailabilityEngine from "@/components/AvailabilityEngine";
 import NotificationSystem from "@/components/NotificationSystem";
 import PriorityEngine from "@/components/PriorityEngine";
 import InterviewerLoadBalancer from "@/components/InterviewerLoadBalancer";
+import ConflictResolutionManager from "@/components/ConflictResolutionManager";
 
 const Schedule = () => {
   const { toast } = useToast();
@@ -467,6 +468,9 @@ const Schedule = () => {
 
       {/* Bulk Scheduling */}
       <BulkScheduling />
+
+      {/* Conflict Resolution */}
+      <ConflictResolutionManager />
     </div>
   );
 };

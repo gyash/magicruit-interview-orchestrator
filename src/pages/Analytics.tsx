@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { Calendar, Clock, Users, TrendingUp, BarChart3, Download, Mail, Save, DollarSign, Zap, Target, UserCheck, AlertTriangle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import PanelistLoadChart from "@/components/PanelistLoadChart";
 
 const Analytics = () => {
   const { toast } = useToast();
@@ -358,6 +359,9 @@ const Analytics = () => {
           </CardContent>
         </Card>
       )}
+
+      {/* Panelist Load Analytics */}
+      <PanelistLoadChart />
     </div>
   );
 };

@@ -189,6 +189,7 @@ export const mockInterviewers: Interviewer[] = [
   }
 ];
 
+
 export const mockCandidates: Candidate[] = [
   {
     id: 'cand-001',
@@ -212,6 +213,59 @@ export const mockCandidates: Candidate[] = [
     email: 'mike.johnson@email.com',
     position: 'UX Designer',
     status: 'offer'
+  },
+  {
+    id: 'cand-004',
+    name: 'Sarah Wilson',
+    email: 'sarah.wilson@email.com',
+    phone: '+1-555-0125',
+    position: 'DevOps Engineer',
+    status: 'interviewing'
+  },
+  {
+    id: 'cand-005',
+    name: 'David Brown',
+    email: 'david.brown@email.com',
+    position: 'Data Scientist',
+    status: 'screening'
+  },
+  {
+    id: 'cand-006',
+    name: 'Emily Davis',
+    email: 'emily.davis@email.com',
+    phone: '+1-555-0126',
+    position: 'Frontend Developer',
+    status: 'interviewing'
+  },
+  {
+    id: 'cand-007',
+    name: 'Alex Rodriguez',
+    email: 'alex.rodriguez@email.com',
+    position: 'Sales Manager',
+    status: 'offer'
+  },
+  {
+    id: 'cand-008',
+    name: 'Lisa Chen',
+    email: 'lisa.chen@email.com',
+    phone: '+1-555-0127',
+    position: 'Marketing Director',
+    status: 'interviewing'
+  },
+  {
+    id: 'cand-009',
+    name: 'James Miller',
+    email: 'james.miller@email.com',
+    position: 'Backend Engineer',
+    status: 'screening'
+  },
+  {
+    id: 'cand-010',
+    name: 'Maria Garcia',
+    email: 'maria.garcia@email.com',
+    phone: '+1-555-0128',
+    position: 'AI/ML Engineer',
+    status: 'interviewing'
   }
 ];
 
@@ -249,6 +303,112 @@ export const mockInterviews: Interview[] = [
     duration_mins: 45,
     video_mode: 'Zoom',
     status: 'pending'
+  },
+  {
+    id: 'int-004',
+    job_id: 'job-007',
+    candidate_id: 'cand-004',
+    stage_name: 'Technical Assessment',
+    interviewers: ['alice@company.com'],
+    scheduled_time: '2025-01-17T09:00:00Z',
+    duration_mins: 90,
+    video_mode: 'Google Meet',
+    status: 'scheduled',
+    notes: 'Infrastructure and automation focus'
+  },
+  {
+    id: 'int-005',
+    job_id: 'job-004',
+    candidate_id: 'cand-005',
+    stage_name: 'Recruiter Screen',
+    interviewers: ['emma@company.com'],
+    scheduled_time: '2025-01-17T11:00:00Z',
+    duration_mins: 30,
+    video_mode: 'Phone',
+    status: 'scheduled'
+  },
+  {
+    id: 'int-006',
+    job_id: 'job-005',
+    candidate_id: 'cand-006',
+    stage_name: 'Coding Round',
+    interviewers: ['bob@company.com', 'alice@company.com'],
+    scheduled_time: '2025-01-17T14:30:00Z',
+    duration_mins: 75,
+    video_mode: 'Google Meet',
+    status: 'scheduled',
+    notes: 'React and TypeScript assessment'
+  },
+  {
+    id: 'int-007',
+    job_id: 'job-006',
+    candidate_id: 'cand-007',
+    stage_name: 'Sales Presentation',
+    interviewers: ['carol@company.com'],
+    scheduled_time: '2025-01-18T10:00:00Z',
+    duration_mins: 45,
+    video_mode: 'Zoom',
+    status: 'pending'
+  },
+  {
+    id: 'int-008',
+    job_id: 'job-008',
+    candidate_id: 'cand-008',
+    stage_name: 'Portfolio Review',
+    interviewers: ['david@company.com'],
+    scheduled_time: '2025-01-18T13:00:00Z',
+    duration_mins: 60,
+    video_mode: 'Google Meet',
+    status: 'scheduled',
+    notes: 'Marketing campaign analysis'
+  },
+  {
+    id: 'int-009',
+    job_id: 'job-010',
+    candidate_id: 'cand-009',
+    stage_name: 'System Design',
+    interviewers: ['alice@company.com', 'bob@company.com'],
+    scheduled_time: '2025-01-19T15:00:00Z',
+    duration_mins: 90,
+    video_mode: 'Google Meet',
+    status: 'scheduled',
+    notes: 'Scalability and architecture discussion'
+  },
+  {
+    id: 'int-010',
+    job_id: 'job-011',
+    candidate_id: 'cand-010',
+    stage_name: 'ML Technical Round',
+    interviewers: ['alice@company.com'],
+    scheduled_time: '2025-01-20T11:30:00Z',
+    duration_mins: 120,
+    video_mode: 'Google Meet',
+    status: 'pending',
+    notes: 'Machine learning algorithms and model deployment'
+  },
+  {
+    id: 'int-011',
+    job_id: 'job-003',
+    candidate_id: 'cand-003',
+    stage_name: 'Design Challenge',
+    interviewers: ['david@company.com'],
+    scheduled_time: '2025-01-20T16:00:00Z',
+    duration_mins: 90,
+    video_mode: 'Zoom',
+    status: 'completed',
+    notes: 'User experience design case study'
+  },
+  {
+    id: 'int-012',
+    job_id: 'job-002',
+    candidate_id: 'cand-002',
+    stage_name: 'Product Strategy',
+    interviewers: ['carol@company.com'],
+    scheduled_time: '2025-01-21T09:30:00Z',
+    duration_mins: 60,
+    video_mode: 'Google Meet',
+    status: 'scheduled',
+    notes: 'Product roadmap and market analysis'
   }
 ];
 
