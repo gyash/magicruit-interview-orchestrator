@@ -15,6 +15,7 @@ import {
   Home,
   Sparkles
 } from "lucide-react";
+import magicRuitLogo from "@/assets/magicruit-logo.png";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home, description: "Overview & insights" },
@@ -46,9 +47,11 @@ export default function Layout({ children }: LayoutProps) {
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-brand-primary to-brand-secondary flex items-center justify-center">
-                <Sparkles className="h-4 w-4 text-white" />
-              </div>
+              <img 
+                src={magicRuitLogo} 
+                alt="MagicRuit Logo" 
+                className="h-8 w-8 object-contain"
+              />
               <span className="text-xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent">
                 MagicRuit
               </span>
@@ -136,9 +139,11 @@ export default function Layout({ children }: LayoutProps) {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <div className="h-5 w-5 rounded bg-gradient-to-r from-brand-primary to-brand-secondary flex items-center justify-center">
-                <Sparkles className="h-3 w-3 text-white" />
-              </div>
+              <img 
+                src={magicRuitLogo} 
+                alt="MagicRuit Logo" 
+                className="h-5 w-5 object-contain"
+              />
               <span>MagicRuit - AI-Powered Interview Coordination</span>
             </div>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
