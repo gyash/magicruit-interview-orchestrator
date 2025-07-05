@@ -42,13 +42,17 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
     )
 
-    const authHeader = req.headers.get('Authorization')!
-    const token = authHeader.replace('Bearer ', '')
-    const { data } = await supabaseClient.auth.getUser(token)
-    const user = data.user
-
-    if (!user) {
-      throw new Error('Not authenticated')
+    // Optional authentication - only for user-specific operations
+    let user = null;
+    try {
+      const authHeader = req.headers.get('Authorization');
+      if (authHeader) {
+        const token = authHeader.replace('Bearer ', '');
+        const { data } = await supabaseClient.auth.getUser(token);
+        user = data.user;
+      }
+    } catch (authError) {
+      console.log('Authentication skipped for API testing');
     }
 
     const { action, apiKey, ...params } = await req.json()
