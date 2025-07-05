@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, MessageSquare, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
 
 interface APIIntegrationsTabProps {
   apiSettings: any;
@@ -15,8 +17,60 @@ interface APIIntegrationsTabProps {
 
 export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTabProps) {
   const { toast } = useToast();
+  const [selectedATS, setSelectedATS] = useState<string>("none");
+  const [greenhouseApiKey, setGreenhouseApiKey] = useState<string>("");
+  const [isTestingConnection, setIsTestingConnection] = useState(false);
+
+  const testGreenhouseConnection = async () => {
+    if (!greenhouseApiKey.trim()) {
+      toast({
+        title: "API Key Required",
+        description: "Please enter your Greenhouse API Key first.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsTestingConnection(true);
+    toast({
+      title: "Testing Connection",
+      description: "Testing Greenhouse API connection...",
+    });
+
+    try {
+      const { data, error } = await supabase.functions.invoke('greenhouse-sync', {
+        body: { action: 'test-connection' }
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        toast({
+          title: "Connection Successful! ✅",
+          description: `Connected to Greenhouse as: ${data.user || 'Unknown User'}`,
+        });
+        onApiSave('greenhouse', 'enabled', true);
+      } else {
+        throw new Error(data.error || 'Connection failed');
+      }
+    } catch (error: any) {
+      console.error('Greenhouse connection error:', error);
+      toast({
+        title: "Connection Failed",
+        description: error.message || "Failed to connect to Greenhouse. Please check your API key.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsTestingConnection(false);
+    }
+  };
 
   const testConnection = async (service: string) => {
+    if (service === 'Greenhouse') {
+      await testGreenhouseConnection();
+      return;
+    }
+
     toast({
       title: "Testing Connection",
       description: `Testing ${service} integration...`,
@@ -118,7 +172,7 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
         <CardContent className="space-y-6">
           <div className="space-y-2 mb-4">
             <Label>Select Your ATS Provider</Label>
-            <Select defaultValue="none">
+            <Select value={selectedATS} onValueChange={setSelectedATS}>
               <SelectTrigger>
                 <SelectValue placeholder="Choose your ATS" />
               </SelectTrigger>
@@ -135,41 +189,77 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
           </div>
 
           {/* ATS Configuration */}
-          <div className="p-4 border rounded-lg">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="font-medium">ATS Integration Settings</div>
-                <div className="text-sm text-muted-foreground">Configure your selected ATS connection</div>
+          {selectedATS !== "none" && (
+            <div className="p-4 border rounded-lg">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <div className="font-medium">
+                    {selectedATS === "greenhouse" ? "Greenhouse" : "ATS Integration"} Settings
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Configure your {selectedATS === "greenhouse" ? "Greenhouse Harvest API" : "ATS"} connection
+                  </div>
+                </div>
+                <Badge variant={apiSettings?.greenhouse?.enabled ? "default" : "secondary"}>
+                  {apiSettings?.greenhouse?.enabled ? "Connected" : "Not Connected"}
+                </Badge>
               </div>
-              <Badge variant="secondary">Not Connected</Badge>
+              
+              {selectedATS === "greenhouse" ? (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Greenhouse Harvest API Key</Label>
+                    <Input
+                      type="password"
+                      placeholder="Enter your Greenhouse API Key (e.g., 14c7ddfda982270409307a5fb980cfcf-7)"
+                      value={greenhouseApiKey}
+                      onChange={(e) => {
+                        setGreenhouseApiKey(e.target.value);
+                        onApiSave('greenhouse', 'api_key', e.target.value);
+                      }}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Find your API key in Greenhouse → Configure → Dev Center → API Credential Management
+                    </p>
+                  </div>
+                  
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => testConnection('Greenhouse')}
+                    disabled={isTestingConnection || !greenhouseApiKey.trim()}
+                  >
+                    {isTestingConnection ? "Testing..." : "Test Connection"}
+                  </Button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>API Key</Label>
+                    <Input
+                      type="password"
+                      placeholder="Enter your ATS API Key"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Webhook Secret</Label>
+                    <Input
+                      type="password"
+                      placeholder="Webhook Secret (if required)"
+                    />
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="mt-4"
+                    onClick={() => testConnection('ATS')}
+                  >
+                    Test Connection
+                  </Button>
+                </div>
+              )}
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>API Key</Label>
-                <Input
-                  type="password"
-                  placeholder="Enter your ATS API Key"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Webhook Secret</Label>
-                <Input
-                  type="password"
-                  placeholder="Webhook Secret (if required)"
-                />
-              </div>
-            </div>
-            
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="mt-4"
-              onClick={() => testConnection('ATS')}
-            >
-              Test Connection
-            </Button>
-          </div>
+          )}
         </CardContent>
       </Card>
 
