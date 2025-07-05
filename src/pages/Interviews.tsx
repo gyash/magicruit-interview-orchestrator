@@ -9,6 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, Clock, Users, Search, Filter, Eye, Edit, RotateCcw, MessageCircle, AlertTriangle } from "lucide-react";
 import { mockInterviews, mockCandidates, mockJobs, getCandidateById, getJobById, formatInterviewerName } from "@/lib/mockData";
 import RescheduleFlow from "@/components/RescheduleFlow";
+import NoShowDetector from "@/components/NoShowDetector";
+import SmartSwapManager from "@/components/SmartSwapManager";
 
 const Interviews = () => {
   const [searchTerm, setSearchTerm] = useState("");

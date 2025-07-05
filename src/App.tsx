@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import WorkflowBuilder from "./pages/WorkflowBuilder";
 import Schedule from "./pages/Schedule";
 import Interviews from "./pages/Interviews";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/workflow" element={<WorkflowBuilder />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/interviews" element={<Interviews />} />
+            <Route path="/settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
