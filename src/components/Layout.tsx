@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import magicRuitLogo from "@/assets/magicruit-logo.png";
 import { NotificationDropdown } from "./NotificationDropdown";
+import { UserProfileDropdown } from "./UserProfileDropdown";
 import { useAuth } from "@/contexts/AuthContext";
 
 const getNavigationItems = (isCoordinator: boolean, isRecruiter: boolean) => {
@@ -97,21 +98,12 @@ export default function Layout({ children }: LayoutProps) {
             </nav>
 
             {/* Header Actions */}
-            <div className="flex items-center gap-4">
-              {user && <NotificationDropdown />}
-              
+            <div className="flex items-center gap-2">
               {user && (
-                <div className="hidden md:flex items-center gap-2">
-                  <div className="text-right">
-                    <p className="text-sm font-medium">{profile?.full_name}</p>
-                    <p className="text-xs text-muted-foreground capitalize">
-                      {profile?.role?.replace('_', ' ')}
-                    </p>
-                  </div>
-                  <Button variant="ghost" size="icon" onClick={signOut}>
-                    <LogOut className="h-4 w-4" />
-                  </Button>
-                </div>
+                <>
+                  <NotificationDropdown />
+                  <UserProfileDropdown />
+                </>
               )}
 
               {!user && (
