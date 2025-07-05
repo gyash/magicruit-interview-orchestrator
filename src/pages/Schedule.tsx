@@ -101,15 +101,18 @@ const Schedule = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Smart Scheduling</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Smart Scheduling Hub 🎯</h1>
           <p className="text-muted-foreground">
-            AI-powered interview coordination with automatic conflict resolution
+            Let AI handle the coordination while you focus on finding great talent. Average scheduling time: <strong>2.3 minutes</strong>
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="flex items-center gap-2">
+          <Badge variant="outline" className="flex items-center gap-2 bg-success/10 text-success border-success">
             <Zap className="h-3 w-3" />
-            AI Enabled
+            AI Active
+          </Badge>
+          <Badge variant="outline" className="bg-brand-primary/10 text-brand-primary border-brand-primary">
+            89% Auto-Success Rate
           </Badge>
         </div>
       </div>

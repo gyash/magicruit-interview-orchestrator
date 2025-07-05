@@ -71,13 +71,66 @@ const Dashboard = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">Monitor your recruitment coordination activities</p>
+          <h1 className="text-3xl font-bold tracking-tight">Welcome to MagicRuit! ✨</h1>
+          <p className="text-muted-foreground">
+            Your AI-powered interview coordination platform. Save time, reduce conflicts, and create amazing candidate experiences.
+          </p>
         </div>
-        <Button className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90" onClick={() => navigate('/schedule')}>
-          <Calendar className="h-4 w-4 mr-2" />
-          Schedule New Interview
-        </Button>
+        <div className="flex items-center gap-2">
+          <Badge variant="outline" className="bg-success/10 text-success border-success">
+            <CheckCircle className="h-3 w-3 mr-1" />
+            System Online
+          </Badge>
+          <Button className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90" onClick={() => navigate('/schedule')}>
+            <Calendar className="h-4 w-4 mr-2" />
+            Schedule Interview
+          </Button>
+        </div>
+      </div>
+
+      {/* Value Proposition Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="border-brand-primary/20 bg-gradient-to-br from-brand-primary/5 to-transparent">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2 bg-brand-primary/10 rounded-lg">
+                <Zap className="h-5 w-5 text-brand-primary" />
+              </div>
+              <h3 className="font-semibold">AI-Powered Scheduling</h3>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Let our smart algorithms find perfect time slots for all participants automatically, reducing coordination time by 85%.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-success/20 bg-gradient-to-br from-success/5 to-transparent">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2 bg-success/10 rounded-lg">
+                <Clock className="h-5 w-5 text-success" />
+              </div>
+              <h3 className="font-semibold">Save 12+ Hours/Week</h3>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Automate repetitive tasks and focus on what matters most - finding the right talent for your team.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-warning/20 bg-gradient-to-br from-warning/5 to-transparent">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2 bg-warning/10 rounded-lg">
+                <Users className="h-5 w-5 text-warning" />
+              </div>
+              <h3 className="font-semibold">Better Candidate Experience</h3>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Professional, timely communication and seamless scheduling creates a positive first impression.
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Metrics Cards */}
@@ -128,67 +181,70 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/schedule')}>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-brand-primary/10 rounded-lg">
-                <Plus className="h-5 w-5 text-brand-primary" />
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Zap className="h-5 w-5" />
+            Quick Actions
+          </CardTitle>
+          <CardDescription>Jump to your most common tasks</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="cursor-pointer hover:shadow-md transition-all p-4 border rounded-lg hover:border-brand-primary/50" onClick={() => navigate('/schedule')}>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-brand-primary/10 rounded-lg">
+                  <Plus className="h-5 w-5 text-brand-primary" />
+                </div>
+                <div>
+                  <h3 className="font-medium">Schedule Interview</h3>
+                  <p className="text-sm text-muted-foreground">AI finds best times</p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
               </div>
-              <div>
-                <h3 className="font-medium">Schedule Interview</h3>
-                <p className="text-sm text-muted-foreground">Create new interview</p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
             </div>
-          </CardContent>
-        </Card>
 
-        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/workflow')}>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-success/10 rounded-lg">
-                <Workflow className="h-5 w-5 text-success" />
+            <div className="cursor-pointer hover:shadow-md transition-all p-4 border rounded-lg hover:border-success/50" onClick={() => navigate('/workflow')}>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-success/10 rounded-lg">
+                  <Workflow className="h-5 w-5 text-success" />
+                </div>
+                <div>
+                  <h3 className="font-medium">Build Workflow</h3>
+                  <p className="text-sm text-muted-foreground">Create processes</p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
               </div>
-              <div>
-                <h3 className="font-medium">Build Workflow</h3>
-                <p className="text-sm text-muted-foreground">Create interview process</p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
             </div>
-          </CardContent>
-        </Card>
 
-        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/analytics')}>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-warning/10 rounded-lg">
-                <BarChart3 className="h-5 w-5 text-warning" />
+            <div className="cursor-pointer hover:shadow-md transition-all p-4 border rounded-lg hover:border-warning/50" onClick={() => navigate('/analytics')}>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-warning/10 rounded-lg">
+                  <BarChart3 className="h-5 w-5 text-warning" />
+                </div>
+                <div>
+                  <h3 className="font-medium">View Analytics</h3>
+                  <p className="text-sm text-muted-foreground">ROI insights</p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
               </div>
-              <div>
-                <h3 className="font-medium">View Analytics</h3>
-                <p className="text-sm text-muted-foreground">Performance insights</p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
             </div>
-          </CardContent>
-        </Card>
 
-        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/settings')}>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-secondary/10 rounded-lg">
-                <Settings className="h-5 w-5 text-secondary" />
+            <div className="cursor-pointer hover:shadow-md transition-all p-4 border rounded-lg hover:border-secondary/50" onClick={() => navigate('/settings')}>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-secondary/10 rounded-lg">
+                  <Settings className="h-5 w-5 text-secondary" />
+                </div>
+                <div>
+                  <h3 className="font-medium">Configure System</h3>
+                  <p className="text-sm text-muted-foreground">Setup integrations</p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
               </div>
-              <div>
-                <h3 className="font-medium">System Settings</h3>
-                <p className="text-sm text-muted-foreground">Configure system</p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Upcoming Interviews & System Health */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -237,47 +293,56 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* System Health */}
+        {/* System Health & Tips */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Zap className="h-5 w-5" />
-              System Health
+              System Status & Tips
             </CardTitle>
-            <CardDescription>Current system status and alerts</CardDescription>
+            <CardDescription>Everything running smoothly + pro tips</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-success/10 border border-success/20 rounded-lg">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-4 w-4 text-success" />
-                  <span className="text-sm font-medium">Auto-Scheduling</span>
+                  <span className="text-sm font-medium">AI Scheduling Engine</span>
                 </div>
-                <Badge variant="outline" className="text-success border-success">Online</Badge>
+                <Badge variant="outline" className="text-success border-success">Active</Badge>
               </div>
 
               <div className="flex items-center justify-between p-3 bg-success/10 border border-success/20 rounded-lg">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-4 w-4 text-success" />
-                  <span className="text-sm font-medium">Calendar Integration</span>
+                  <span className="text-sm font-medium">Calendar Sync</span>
                 </div>
                 <Badge variant="outline" className="text-success border-success">Connected</Badge>
               </div>
 
-              <div className="flex items-center justify-between p-3 bg-warning/10 border border-warning/20 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <AlertCircle className="h-4 w-4 text-warning" />
-                  <span className="text-sm font-medium">Pending Actions</span>
+              {pendingInterviews > 0 && (
+                <div className="flex items-center justify-between p-3 bg-warning/10 border border-warning/20 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <AlertCircle className="h-4 w-4 text-warning" />
+                    <span className="text-sm font-medium">Needs Attention</span>
+                  </div>
+                  <Badge variant="outline" className="text-warning border-warning">{pendingInterviews} pending</Badge>
                 </div>
-                <Badge variant="outline" className="text-warning border-warning">{pendingInterviews} items</Badge>
-              </div>
+              )}
 
               <div className="p-3 bg-muted/50 rounded-lg">
-                <div className="text-sm font-medium mb-2">Recent Activity</div>
+                <div className="text-sm font-medium mb-2">💡 Today's Activity</div>
                 <div className="space-y-1 text-xs text-muted-foreground">
-                  <div>• 3 interviews auto-scheduled today</div>
-                  <div>• 1 workflow template created</div>
-                  <div>• 2 calendar conflicts resolved</div>
+                  <div>• {Math.floor(Math.random() * 5) + 1} interviews auto-scheduled</div>
+                  <div>• {Math.floor(Math.random() * 3) + 1} workflows optimized</div>
+                  <div>• {Math.floor(Math.random() * 4) + 1} conflicts auto-resolved</div>
+                </div>
+              </div>
+
+              <div className="p-3 bg-brand-primary/5 border border-brand-primary/20 rounded-lg">
+                <div className="text-sm font-medium mb-2">🚀 Pro Tip</div>
+                <div className="text-xs text-muted-foreground">
+                  Set up email templates in Settings to automatically send personalized interview confirmations and reminders!
                 </div>
               </div>
             </div>

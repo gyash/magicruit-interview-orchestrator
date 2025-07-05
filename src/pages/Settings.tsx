@@ -95,9 +95,9 @@ const SettingsPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">System Settings</h1>
+          <h1 className="text-3xl font-bold tracking-tight">System Configuration ⚙️</h1>
           <p className="text-muted-foreground">
-            Configure integrations, permissions, and system behavior
+            Power up your recruitment engine. Connect your tools, customize workflows, and configure AI preferences for maximum efficiency.
           </p>
         </div>
         <Button onClick={saveAllSettings} className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90">

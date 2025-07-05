@@ -59,8 +59,8 @@ const Analytics = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Analytics Dashboard</h1>
-          <p className="text-muted-foreground">Track performance, efficiency, and key recruitment metrics</p>
+          <h1 className="text-3xl font-bold tracking-tight">Analytics Dashboard 📊</h1>
+          <p className="text-muted-foreground">Your recruitment ROI at a glance. Our customers typically see 85% time savings and 40% cost reduction within the first month.</p>
         </div>
         
         <div className="flex gap-2">

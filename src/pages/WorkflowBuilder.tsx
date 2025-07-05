@@ -161,9 +161,9 @@ const WorkflowBuilder = () => {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Workflow Builder</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Workflow Builder 🔧</h1>
         <p className="text-muted-foreground">
-          Define interview workflows for structured candidate evaluation
+          Design your perfect interview process. Create templates, set stages, and let AI handle the execution. Build once, use everywhere.
         </p>
       </div>
 
