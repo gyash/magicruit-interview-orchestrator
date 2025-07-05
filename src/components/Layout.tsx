@@ -13,19 +13,32 @@ import {
   Bell,
   Workflow,
   Home,
-  Sparkles
+  Sparkles,
+  LogOut,
+  User
 } from "lucide-react";
 import magicRuitLogo from "@/assets/magicruit-logo.png";
 import { NotificationDropdown } from "./NotificationDropdown";
+import { useAuth } from "@/contexts/AuthContext";
 
-const navigation = [
-  { name: "Dashboard", href: "/", icon: Home, description: "Overview & insights" },
-  { name: "Schedule", href: "/schedule", icon: Calendar, description: "AI-powered scheduling" },
-  { name: "Interviews", href: "/interviews", icon: Users, description: "Manage all interviews" },
-  { name: "Workflow Builder", href: "/workflow", icon: Workflow, description: "Create processes" },
-  { name: "Analytics", href: "/analytics", icon: BarChart3, description: "Performance metrics" },
-  { name: "Settings", href: "/settings", icon: Settings, description: "System configuration" },
-];
+const getNavigationItems = (isCoordinator: boolean, isRecruiter: boolean) => {
+  const baseItems = [
+    { name: "Dashboard", href: "/", icon: Home, description: "Overview & insights" },
+    { name: "Schedule", href: "/schedule", icon: Calendar, description: "AI-powered scheduling" },
+    { name: "Interviews", href: "/interviews", icon: Users, description: "Manage all interviews" },
+  ];
+
+  if (isCoordinator) {
+    return [
+      ...baseItems,
+      { name: "Workflow Builder", href: "/workflow", icon: Workflow, description: "Create processes" },
+      { name: "Analytics", href: "/analytics", icon: BarChart3, description: "Performance metrics" },
+      { name: "Settings", href: "/settings", icon: Settings, description: "System configuration" },
+    ];
+  }
+
+  return baseItems;
+};
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -34,6 +47,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, profile, signOut, isCoordinator, isRecruiter } = useAuth();
 
   const isActive = (href: string) => {
     if (href === "/") return location.pathname === href;
@@ -63,7 +77,7 @@ export default function Layout({ children }: LayoutProps) {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              {navigation.map((item) => {
+              {getNavigationItems(isCoordinator, isRecruiter).map((item) => {
                 const Icon = item.icon;
                 return (
                   <Link
@@ -84,7 +98,30 @@ export default function Layout({ children }: LayoutProps) {
 
             {/* Header Actions */}
             <div className="flex items-center gap-4">
-              <NotificationDropdown />
+              {user && <NotificationDropdown />}
+              
+              {user && (
+                <div className="hidden md:flex items-center gap-2">
+                  <div className="text-right">
+                    <p className="text-sm font-medium">{profile?.full_name}</p>
+                    <p className="text-xs text-muted-foreground capitalize">
+                      {profile?.role?.replace('_', ' ')}
+                    </p>
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={signOut}>
+                    <LogOut className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+
+              {!user && (
+                <Link to="/auth">
+                  <Button variant="default">
+                    <User className="h-4 w-4 mr-2" />
+                    Sign In
+                  </Button>
+                </Link>
+              )}
               
               {/* Mobile menu button */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -94,33 +131,71 @@ export default function Layout({ children }: LayoutProps) {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-80">
-                  <div className="flex flex-col gap-4 py-4">
-                    <div className="px-3 py-2 border-b">
-                      <h3 className="font-semibold">Navigation</h3>
-                      <p className="text-sm text-muted-foreground">Access all your tools</p>
-                    </div>
-                    {navigation.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <Link
-                          key={item.name}
-                          to={item.href}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className={`flex items-start gap-3 px-3 py-3 rounded-md text-sm transition-colors ${
-                            isActive(item.href)
-                              ? "bg-primary text-primary-foreground"
-                              : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                          }`}
-                        >
-                          <Icon className="h-4 w-4 mt-0.5" />
-                          <div>
-                            <div className="font-medium">{item.name}</div>
-                            <div className="text-xs opacity-70">{item.description}</div>
+                    <div className="flex flex-col gap-4 py-4">
+                      <div className="px-3 py-2 border-b">
+                        <h3 className="font-semibold">Navigation</h3>
+                        <p className="text-sm text-muted-foreground">Access all your tools</p>
+                      </div>
+                      {getNavigationItems(isCoordinator, isRecruiter).map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link
+                            key={item.name}
+                            to={item.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={`flex items-start gap-3 px-3 py-3 rounded-md text-sm transition-colors ${
+                              isActive(item.href)
+                                ? "bg-primary text-primary-foreground"
+                                : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                              }`}
+                          >
+                            <Icon className="h-4 w-4 mt-0.5" />
+                            <div>
+                              <div className="font-medium">{item.name}</div>
+                              <div className="text-xs opacity-70">{item.description}</div>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                      
+                      {user && (
+                        <>
+                          <div className="px-3 py-2 border-t mt-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <User className="h-4 w-4" />
+                              <span className="font-medium">{profile?.full_name}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground capitalize">
+                              {profile?.role?.replace('_', ' ')}
+                            </p>
                           </div>
+                          <Button 
+                            variant="ghost" 
+                            onClick={() => {
+                              setMobileMenuOpen(false);
+                              signOut();
+                            }}
+                            className="mx-3 justify-start"
+                          >
+                            <LogOut className="h-4 w-4 mr-2" />
+                            Sign Out
+                          </Button>
+                        </>
+                      )}
+                      
+                      {!user && (
+                        <Link 
+                          to="/auth" 
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="mx-3"
+                        >
+                          <Button variant="default" className="w-full justify-start">
+                            <User className="h-4 w-4 mr-2" />
+                            Sign In
+                          </Button>
                         </Link>
-                      );
-                    })}
-                  </div>
+                      )}
+                    </div>
                 </SheetContent>
               </Sheet>
             </div>
