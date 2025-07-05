@@ -11,6 +11,9 @@ import { Calendar, Clock, Users, Mail, Phone, MapPin, Video, Zap, ArrowRight, Ch
 import { mockJobs, mockCandidates, mockInterviewers, mockWorkflows, getWorkflowByJobId } from "@/lib/mockData";
 import { useToast } from "@/hooks/use-toast";
 import BulkScheduling from "@/components/BulkScheduling";
+import SmartLinkGenerator from "@/components/SmartLinkGenerator";
+import AvailabilityEngine from "@/components/AvailabilityEngine";
+import NotificationSystem from "@/components/NotificationSystem";
 
 const Schedule = () => {
   const { toast } = useToast();
@@ -418,6 +421,41 @@ const Schedule = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Milestone 1 Components */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <SmartLinkGenerator 
+          interview={{
+            id: "int-123",
+            stage_name: "Technical Round",
+            duration_mins: 60,
+            interviewers: ["john.doe@company.com", "jane.smith@company.com"],
+            candidate_id: selectedCandidateId || "cand-456"
+          }}
+          onLinkGenerated={(link) => {
+            console.log("Smart link generated:", link);
+          }}
+        />
+        
+        <AvailabilityEngine
+          interviewers={["john.doe@company.com", "jane.smith@company.com"]}
+          duration_mins={60}
+          onAvailabilityUpdated={(availability) => {
+            console.log("Availability updated:", availability);
+          }}
+        />
+      </div>
+
+      <NotificationSystem
+        interview={{
+          id: "int-123",
+          candidate_name: "John Candidate",
+          job_title: selectedJob?.title || "Software Engineer"
+        }}
+        onNotificationSent={(template) => {
+          console.log("Notification sent:", template);
+        }}
+      />
 
       {/* Bulk Scheduling */}
       <BulkScheduling />
