@@ -65,6 +65,42 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
     }
   };
 
+  const testGreenhouseEndpoint = async (action: string) => {
+    setIsTestingConnection(true);
+    toast({
+      title: `Testing ${action.replace('fetch-', '').charAt(0).toUpperCase() + action.replace('fetch-', '').slice(1)}`,
+      description: `Fetching data from Greenhouse...`,
+    });
+
+    try {
+      const { data, error } = await supabase.functions.invoke('greenhouse-sync', {
+        body: { action }
+      });
+
+      if (error) throw error;
+
+      if (data.success !== false) {
+        const results = data.jobs || data.candidates || data.interviews || [];
+        toast({
+          title: "Success! ✅",
+          description: `Found ${results.length} ${action.replace('fetch-', '')}. Check console for details.`,
+        });
+        console.log(`Greenhouse ${action} results:`, data);
+      } else {
+        throw new Error(data.error || 'Failed to fetch data');
+      }
+    } catch (error: any) {
+      console.error(`Greenhouse ${action} error:`, error);
+      toast({
+        title: "Test Failed",
+        description: error.message || `Failed to fetch ${action.replace('fetch-', '')}`,
+        variant: "destructive"
+      });
+    } finally {
+      setIsTestingConnection(false);
+    }
+  };
+
   const testConnection = async (service: string) => {
     if (service === 'Greenhouse') {
       await testGreenhouseConnection();
@@ -223,14 +259,45 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
                     </p>
                   </div>
                   
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => testConnection('Greenhouse')}
-                    disabled={isTestingConnection || !greenhouseApiKey.trim()}
-                  >
-                    {isTestingConnection ? "Testing..." : "Test Connection"}
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => testConnection('Greenhouse')}
+                      disabled={isTestingConnection || !greenhouseApiKey.trim()}
+                    >
+                      {isTestingConnection ? "Testing..." : "Test Connection"}
+                    </Button>
+                    
+                    {apiSettings?.greenhouse?.enabled && (
+                      <div className="flex gap-2">
+                        <Button 
+                          variant="secondary" 
+                          size="sm" 
+                          onClick={() => testGreenhouseEndpoint('fetch-jobs')}
+                          disabled={isTestingConnection}
+                        >
+                          Test Jobs
+                        </Button>
+                        <Button 
+                          variant="secondary" 
+                          size="sm" 
+                          onClick={() => testGreenhouseEndpoint('fetch-candidates')}
+                          disabled={isTestingConnection}
+                        >
+                          Test Candidates
+                        </Button>
+                        <Button 
+                          variant="secondary" 
+                          size="sm" 
+                          onClick={() => testGreenhouseEndpoint('fetch-interviews')}
+                          disabled={isTestingConnection}
+                        >
+                          Test Interviews
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
