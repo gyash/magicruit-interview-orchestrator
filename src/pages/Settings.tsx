@@ -113,11 +113,11 @@ const SettingsPage = () => {
             <TabsTrigger value="system" className="text-xs">System</TabsTrigger>
             <TabsTrigger value="access" className="text-xs">Access</TabsTrigger>
             <TabsTrigger value="notifications" className="text-xs">Notifications</TabsTrigger>
+            <TabsTrigger value="emails" className="text-xs">📧 Email Builder</TabsTrigger>
             <TabsTrigger value="candidate" className="text-xs">Candidate UX</TabsTrigger>
             <TabsTrigger value="compliance" className="text-xs">Compliance</TabsTrigger>
             <TabsTrigger value="templates" className="text-xs">Templates</TabsTrigger>
             <TabsTrigger value="reporting" className="text-xs">Reporting</TabsTrigger>
-            <TabsTrigger value="emails" className="text-xs">Email Builder</TabsTrigger>
             <TabsTrigger value="admin" className="text-xs">Admin</TabsTrigger>
           </TabsList>
         </div>
@@ -171,7 +171,7 @@ const SettingsPage = () => {
           <ReportingConfigTab />
         </TabsContent>
 
-        {/* Email Templates Tab */}
+        {/* Email Templates Tab - Moved to prominent position */}
         <TabsContent value="emails">
           <EmailTemplatesTab />
         </TabsContent>
