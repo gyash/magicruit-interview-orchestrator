@@ -12,6 +12,9 @@ import EdgeCaseAlerts from "@/components/EdgeCaseAlerts";
 import ATSSyncManager from "@/components/ATSSyncManager";
 import MultiChannelMessaging from "@/components/MultiChannelMessaging";
 import ConflictResolutionManager from "@/components/ConflictResolutionManager";
+import LifecycleManager from "@/components/LifecycleManager";
+import RoleEligibilityFramework from "@/components/RoleEligibilityFramework";
+import V2Planning from "@/components/V2Planning";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -240,6 +243,15 @@ const Dashboard = () => {
       <MultiChannelMessaging 
         interview={mockInterviews[0]}
       />
+
+      {/* Milestone 5 - Lifecycle Management */}
+      <LifecycleManager />
+
+      {/* Role Eligibility Framework */}
+      <RoleEligibilityFramework />
+
+      {/* V2 Planning */}
+      <V2Planning />
 
       {/* Conflict Resolution */}
       <ConflictResolutionManager />
