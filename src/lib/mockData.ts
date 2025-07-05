@@ -79,6 +79,69 @@ export const mockJobs: Job[] = [
     title: 'UX Designer',
     department: 'Design',
     location: 'New York',
+    status: 'active'
+  },
+  {
+    id: 'job-004',
+    title: 'Data Scientist',
+    department: 'Engineering',
+    location: 'Remote',
+    status: 'active'
+  },
+  {
+    id: 'job-005',
+    title: 'Frontend Developer',
+    department: 'Engineering',
+    location: 'Austin',
+    status: 'active'
+  },
+  {
+    id: 'job-006',
+    title: 'Sales Manager',
+    department: 'Sales',
+    location: 'Chicago',
+    status: 'active'
+  },
+  {
+    id: 'job-007',
+    title: 'DevOps Engineer',
+    department: 'Engineering',
+    location: 'Remote',
+    status: 'active'
+  },
+  {
+    id: 'job-008',
+    title: 'Marketing Director',
+    department: 'Marketing',
+    location: 'Los Angeles',
+    status: 'active'
+  },
+  {
+    id: 'job-009',
+    title: 'Customer Success Manager',
+    department: 'Customer Success',
+    location: 'Remote',
+    status: 'active'
+  },
+  {
+    id: 'job-010',
+    title: 'Backend Engineer',
+    department: 'Engineering',
+    location: 'Seattle',
+    status: 'active'
+  },
+  {
+    id: 'job-011',
+    title: 'AI/ML Engineer',
+    department: 'Engineering',
+    location: 'Remote',
+    status: 'active'
+  },
+  {
+    id: 'job-012',
+    title: 'Business Analyst',
+    department: 'Operations',
+    location: 'Boston',
     status: 'paused'
   }
 ];

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, MessageSquare, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -165,22 +166,32 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Greenhouse */}
+          <div className="space-y-2 mb-4">
+            <Label>Select Your ATS Provider</Label>
+            <Select defaultValue="none">
+              <SelectTrigger>
+                <SelectValue placeholder="Choose your ATS" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">No ATS Integration</SelectItem>
+                <SelectItem value="greenhouse">Greenhouse</SelectItem>
+                <SelectItem value="lever">Lever</SelectItem>
+                <SelectItem value="workday">Workday</SelectItem>
+                <SelectItem value="bamboohr">BambooHR</SelectItem>
+                <SelectItem value="smartrecruiters">SmartRecruiters</SelectItem>
+                <SelectItem value="jobvite">Jobvite</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* ATS Configuration */}
           <div className="p-4 border rounded-lg">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <div className="font-medium">Greenhouse</div>
-                <div className="text-sm text-muted-foreground">Sync candidates and workflows</div>
+                <div className="font-medium">ATS Integration Settings</div>
+                <div className="text-sm text-muted-foreground">Configure your selected ATS connection</div>
               </div>
-              <div className="flex items-center gap-2">
-                <Switch
-                  checked={apiSettings.greenhouse?.enabled || false}
-                  onCheckedChange={(checked) => onApiSave('greenhouse', 'enabled', checked)}
-                />
-                <Badge variant={apiSettings.greenhouse?.enabled ? "default" : "secondary"}>
-                  {apiSettings.greenhouse?.enabled ? "Enabled" : "Disabled"}
-                </Badge>
-              </div>
+              <Badge variant="secondary">Not Connected</Badge>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -188,18 +199,14 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
                 <Label>API Key</Label>
                 <Input
                   type="password"
-                  placeholder="Greenhouse API Key"
-                  value={apiSettings.greenhouse?.api_key || ''}
-                  onChange={(e) => onApiSave('greenhouse', 'api_key', e.target.value)}
+                  placeholder="Enter your ATS API Key"
                 />
               </div>
               <div className="space-y-2">
                 <Label>Webhook Secret</Label>
                 <Input
                   type="password"
-                  placeholder="Webhook Secret"
-                  value={apiSettings.greenhouse?.webhook_secret || ''}
-                  onChange={(e) => onApiSave('greenhouse', 'webhook_secret', e.target.value)}
+                  placeholder="Webhook Secret (if required)"
                 />
               </div>
             </div>
@@ -208,47 +215,10 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
               variant="outline" 
               size="sm" 
               className="mt-4"
-              onClick={() => testConnection('Greenhouse')}
+              onClick={() => testConnection('ATS')}
             >
               Test Connection
             </Button>
-          </div>
-
-          {/* Lever */}
-          <div className="p-4 border rounded-lg">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="font-medium">Lever</div>
-                <div className="text-sm text-muted-foreground">Import candidates and job postings</div>
-              </div>
-              <Switch />
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input type="password" placeholder="Lever API Key" />
-              <Input placeholder="Webhook URL" />
-            </div>
-            
-            <Button variant="outline" size="sm" className="mt-4">Test Connection</Button>
-          </div>
-
-          {/* Workday */}
-          <div className="p-4 border rounded-lg">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="font-medium">Workday</div>
-                <div className="text-sm text-muted-foreground">Enterprise HRIS integration</div>
-              </div>
-              <Switch />
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Input placeholder="Tenant URL" />
-              <Input placeholder="Username" />
-              <Input type="password" placeholder="Password" />
-            </div>
-            
-            <Button variant="outline" size="sm" className="mt-4">Test Connection</Button>
           </div>
         </CardContent>
       </Card>

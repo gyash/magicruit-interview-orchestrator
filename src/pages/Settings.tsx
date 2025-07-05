@@ -12,6 +12,7 @@ import { CandidateExperienceTab } from "@/components/settings/CandidateExperienc
 import { ComplianceSecurityTab } from "@/components/settings/ComplianceSecurityTab";
 import { WorkflowTemplatesTab } from "@/components/settings/WorkflowTemplatesTab";
 import { ReportingConfigTab } from "@/components/settings/ReportingConfigTab";
+import { EmailTemplatesTab } from "@/components/settings/EmailTemplatesTab";
 
 const SettingsPage = () => {
   const { toast } = useToast();
@@ -107,7 +108,7 @@ const SettingsPage = () => {
 
       <Tabs defaultValue="integrations" className="space-y-6">
         <div className="overflow-x-auto">
-          <TabsList className="grid w-full min-w-max grid-cols-9 gap-1">
+          <TabsList className="grid w-full min-w-max grid-cols-10 gap-1">
             <TabsTrigger value="integrations" className="text-xs">Integrations</TabsTrigger>
             <TabsTrigger value="system" className="text-xs">System</TabsTrigger>
             <TabsTrigger value="access" className="text-xs">Access</TabsTrigger>
@@ -116,6 +117,7 @@ const SettingsPage = () => {
             <TabsTrigger value="compliance" className="text-xs">Compliance</TabsTrigger>
             <TabsTrigger value="templates" className="text-xs">Templates</TabsTrigger>
             <TabsTrigger value="reporting" className="text-xs">Reporting</TabsTrigger>
+            <TabsTrigger value="emails" className="text-xs">Email Builder</TabsTrigger>
             <TabsTrigger value="admin" className="text-xs">Admin</TabsTrigger>
           </TabsList>
         </div>
@@ -167,6 +169,11 @@ const SettingsPage = () => {
         {/* Reporting Configuration Tab */}
         <TabsContent value="reporting">
           <ReportingConfigTab />
+        </TabsContent>
+
+        {/* Email Templates Tab */}
+        <TabsContent value="emails">
+          <EmailTemplatesTab />
         </TabsContent>
 
         {/* Master Admin Tab */}
