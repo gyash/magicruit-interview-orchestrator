@@ -44,44 +44,50 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
             Calendar Integrations
           </CardTitle>
           <CardDescription>
-            Connect with Google Calendar and Outlook for availability checking
+            Connect with calendar providers for availability checking
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Google Calendar */}
+          <div className="space-y-2 mb-4">
+            <Label>Select Calendar Provider</Label>
+            <Select defaultValue="none">
+              <SelectTrigger>
+                <SelectValue placeholder="Choose your calendar provider" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">No Calendar Integration</SelectItem>
+                <SelectItem value="google">Google Calendar</SelectItem>
+                <SelectItem value="outlook">Microsoft Outlook</SelectItem>
+                <SelectItem value="office365">Office 365</SelectItem>
+                <SelectItem value="exchange">Exchange Server</SelectItem>
+                <SelectItem value="apple">Apple iCloud</SelectItem>
+                <SelectItem value="yahoo">Yahoo Calendar</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Calendar Configuration */}
           <div className="p-4 border rounded-lg">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <div className="font-medium">Google Calendar</div>
-                <div className="text-sm text-muted-foreground">OAuth 2.0 integration for calendar access</div>
+                <div className="font-medium">Calendar Integration Settings</div>
+                <div className="text-sm text-muted-foreground">Configure your selected calendar connection</div>
               </div>
-              <div className="flex items-center gap-2">
-                <Switch
-                  checked={apiSettings.google_calendar.enabled}
-                  onCheckedChange={(checked) => onApiSave('google_calendar', 'enabled', checked)}
-                />
-                <Badge variant={apiSettings.google_calendar.enabled ? "default" : "secondary"}>
-                  {apiSettings.google_calendar.enabled ? "Enabled" : "Disabled"}
-                </Badge>
-              </div>
+              <Badge variant="secondary">Not Connected</Badge>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Client ID</Label>
+                <Label>Client ID / Application ID</Label>
                 <Input
-                  placeholder="Google OAuth Client ID"
-                  value={apiSettings.google_calendar.client_id}
-                  onChange={(e) => onApiSave('google_calendar', 'client_id', e.target.value)}
+                  placeholder="Enter your calendar app client ID"
                 />
               </div>
               <div className="space-y-2">
-                <Label>API Key</Label>
+                <Label>API Key / Client Secret</Label>
                 <Input
                   type="password"
-                  placeholder="Google Calendar API Key"
-                  value={apiSettings.google_calendar.api_key}
-                  onChange={(e) => onApiSave('google_calendar', 'api_key', e.target.value)}
+                  placeholder="Enter your calendar API key"
                 />
               </div>
             </div>
@@ -90,63 +96,7 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
               variant="outline" 
               size="sm" 
               className="mt-4"
-              onClick={() => testConnection('Google Calendar')}
-            >
-              Test Connection
-            </Button>
-          </div>
-
-          {/* Zoom Integration */}
-          <div className="p-4 border rounded-lg">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="font-medium">Zoom</div>
-                <div className="text-sm text-muted-foreground">Video conferencing and join detection</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Switch
-                  checked={apiSettings.zoom.enabled}
-                  onCheckedChange={(checked) => onApiSave('zoom', 'enabled', checked)}
-                />
-                <Badge variant={apiSettings.zoom.enabled ? "default" : "secondary"}>
-                  {apiSettings.zoom.enabled ? "Enabled" : "Disabled"}
-                </Badge>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label>API Key</Label>
-                <Input
-                  placeholder="Zoom API Key"
-                  value={apiSettings.zoom.api_key}
-                  onChange={(e) => onApiSave('zoom', 'api_key', e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>API Secret</Label>
-                <Input
-                  type="password"
-                  placeholder="Zoom API Secret"
-                  value={apiSettings.zoom.api_secret}
-                  onChange={(e) => onApiSave('zoom', 'api_secret', e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Webhook URL</Label>
-                <Input
-                  placeholder="Webhook endpoint for join events"
-                  value={apiSettings.zoom.webhook_url}
-                  onChange={(e) => onApiSave('zoom', 'webhook_url', e.target.value)}
-                />
-              </div>
-            </div>
-            
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="mt-4"
-              onClick={() => testConnection('Zoom')}
+              onClick={() => testConnection('Calendar Provider')}
             >
               Test Connection
             </Button>
@@ -235,59 +185,47 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Microsoft Teams */}
-          <div className="p-4 border rounded-lg">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="font-medium">Microsoft Teams</div>
-                <div className="text-sm text-muted-foreground">Enterprise video conferencing</div>
-              </div>
-              <Switch />
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Input placeholder="Client ID" />
-              <Input type="password" placeholder="Client Secret" />
-              <Input placeholder="Tenant ID" />
-            </div>
-            
-            <Button variant="outline" size="sm" className="mt-4">Test Connection</Button>
+          <div className="space-y-2 mb-4">
+            <Label>Select Communication Channel</Label>
+            <Select defaultValue="none">
+              <SelectTrigger>
+                <SelectValue placeholder="Choose your communication channel" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">No Communication Integration</SelectItem>
+                <SelectItem value="slack">Slack</SelectItem>
+                <SelectItem value="teams">Microsoft Teams</SelectItem>
+                <SelectItem value="whatsapp">WhatsApp Business</SelectItem>
+                <SelectItem value="telegram">Telegram Bot</SelectItem>
+                <SelectItem value="discord">Discord</SelectItem>
+                <SelectItem value="zoom">Zoom</SelectItem>
+                <SelectItem value="webex">Cisco Webex</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
-          {/* Slack Enhanced */}
+          {/* Communication Configuration */}
           <div className="p-4 border rounded-lg">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <div className="font-medium">Slack</div>
-                <div className="text-sm text-muted-foreground">Team notifications and alerts</div>
+                <div className="font-medium">Communication Integration Settings</div>
+                <div className="text-sm text-muted-foreground">Configure your selected communication channel</div>
               </div>
-              <div className="flex items-center gap-2">
-                <Switch
-                  checked={apiSettings.slack?.enabled || false}
-                  onCheckedChange={(checked) => onApiSave('slack', 'enabled', checked)}
-                />
-                <Badge variant={apiSettings.slack?.enabled ? "default" : "secondary"}>
-                  {apiSettings.slack?.enabled ? "Enabled" : "Disabled"}
-                </Badge>
-              </div>
+              <Badge variant="secondary">Not Connected</Badge>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Bot Token</Label>
+                <Label>API Key / Bot Token</Label>
                 <Input
                   type="password"
-                  placeholder="xoxb-your-bot-token"
-                  value={apiSettings.slack?.bot_token || ''}
-                  onChange={(e) => onApiSave('slack', 'bot_token', e.target.value)}
+                  placeholder="Enter your API key or bot token"
                 />
               </div>
               <div className="space-y-2">
-                <Label>Webhook URL</Label>
+                <Label>Webhook URL / Channel ID</Label>
                 <Input
-                  placeholder="https://hooks.slack.com/..."
-                  value={apiSettings.slack?.webhook_url || ''}
-                  onChange={(e) => onApiSave('slack', 'webhook_url', e.target.value)}
+                  placeholder="Enter webhook URL or channel identifier"
                 />
               </div>
             </div>
@@ -296,102 +234,7 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
               variant="outline" 
               size="sm" 
               className="mt-4"
-              onClick={() => testConnection('Slack')}
-            >
-              Test Connection
-            </Button>
-          </div>
-
-          {/* WhatsApp Business */}
-          <div className="p-4 border rounded-lg">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="font-medium">WhatsApp Business API</div>
-                <div className="text-sm text-muted-foreground">Send instant notifications and reminders</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Switch
-                  checked={apiSettings.whatsapp.enabled}
-                  onCheckedChange={(checked) => onApiSave('whatsapp', 'enabled', checked)}
-                />
-                <Badge variant={apiSettings.whatsapp.enabled ? "default" : "secondary"}>
-                  {apiSettings.whatsapp.enabled ? "Enabled" : "Disabled"}
-                </Badge>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Business API Key</Label>
-                <Input
-                  type="password"
-                  placeholder="WhatsApp Business API Key"
-                  value={apiSettings.whatsapp.business_api_key}
-                  onChange={(e) => onApiSave('whatsapp', 'business_api_key', e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Phone Number</Label>
-                <Input
-                  placeholder="+1-555-0123"
-                  value={apiSettings.whatsapp.phone_number}
-                  onChange={(e) => onApiSave('whatsapp', 'phone_number', e.target.value)}
-                />
-              </div>
-            </div>
-            
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="mt-4"
-              onClick={() => testConnection('WhatsApp')}
-            >
-              Test Connection
-            </Button>
-          </div>
-
-          {/* Outlook Calendar */}
-          <div className="p-4 border rounded-lg">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="font-medium">Outlook Calendar</div>
-                <div className="text-sm text-muted-foreground">Microsoft 365 calendar integration</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Switch
-                  checked={apiSettings.outlook_calendar?.enabled || false}
-                  onCheckedChange={(checked) => onApiSave('outlook_calendar', 'enabled', checked)}
-                />
-                <Badge variant={apiSettings.outlook_calendar?.enabled ? "default" : "secondary"}>
-                  {apiSettings.outlook_calendar?.enabled ? "Enabled" : "Disabled"}
-                </Badge>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Client ID</Label>
-                <Input
-                  placeholder="Microsoft App Client ID"
-                  value={apiSettings.outlook_calendar?.client_id || ''}
-                  onChange={(e) => onApiSave('outlook_calendar', 'client_id', e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Tenant ID</Label>
-                <Input
-                  placeholder="Azure AD Tenant ID"
-                  value={apiSettings.outlook_calendar?.tenant_id || ''}
-                  onChange={(e) => onApiSave('outlook_calendar', 'tenant_id', e.target.value)}
-                />
-              </div>
-            </div>
-            
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="mt-4"
-              onClick={() => testConnection('Outlook Calendar')}
+              onClick={() => testConnection('Communication Channel')}
             >
               Test Connection
             </Button>
