@@ -23,22 +23,14 @@ import { UserProfileDropdown } from "./UserProfileDropdown";
 import { useAuth } from "@/contexts/AuthContext";
 
 const getNavigationItems = (isCoordinator: boolean, isRecruiter: boolean) => {
-  const baseItems = [
+  return [
     { name: "Dashboard", href: "/", icon: Home, description: "Overview & insights" },
     { name: "Schedule", href: "/schedule", icon: Calendar, description: "AI-powered scheduling" },
     { name: "Interviews", href: "/interviews", icon: Users, description: "Manage all interviews" },
+    { name: "Workflow Builder", href: "/workflow", icon: Workflow, description: "Create processes" },
+    { name: "Analytics", href: "/analytics", icon: BarChart3, description: "Performance metrics" },
+    { name: "Settings", href: "/settings", icon: Settings, description: "System configuration" },
   ];
-
-  if (isCoordinator) {
-    return [
-      ...baseItems,
-      { name: "Workflow Builder", href: "/workflow", icon: Workflow, description: "Create processes" },
-      { name: "Analytics", href: "/analytics", icon: BarChart3, description: "Performance metrics" },
-      { name: "Settings", href: "/settings", icon: Settings, description: "System configuration" },
-    ];
-  }
-
-  return baseItems;
 };
 
 interface LayoutProps {
@@ -99,21 +91,15 @@ export default function Layout({ children }: LayoutProps) {
 
             {/* Header Actions */}
             <div className="flex items-center gap-2">
-              {user && (
-                <>
-                  <NotificationDropdown />
-                  <UserProfileDropdown />
-                </>
-              )}
+              <NotificationDropdown />
+              <UserProfileDropdown />
 
-              {!user && (
-                <Link to="/auth">
-                  <Button variant="default">
-                    <User className="h-4 w-4 mr-2" />
-                    Sign In
-                  </Button>
-                </Link>
-              )}
+              <Link to="/auth">
+                <Button variant="ghost" size="sm">
+                  <User className="h-4 w-4 mr-2" />
+                  Auth (Demo)
+                </Button>
+              </Link>
               
               {/* Mobile menu button */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -150,43 +136,16 @@ export default function Layout({ children }: LayoutProps) {
                         );
                       })}
                       
-                      {user && (
-                        <>
-                          <div className="px-3 py-2 border-t mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <User className="h-4 w-4" />
-                              <span className="font-medium">{profile?.full_name}</span>
-                            </div>
-                            <p className="text-xs text-muted-foreground capitalize">
-                              {profile?.role?.replace('_', ' ')}
-                            </p>
-                          </div>
-                          <Button 
-                            variant="ghost" 
-                            onClick={() => {
-                              setMobileMenuOpen(false);
-                              signOut();
-                            }}
-                            className="mx-3 justify-start"
-                          >
-                            <LogOut className="h-4 w-4 mr-2" />
-                            Sign Out
-                          </Button>
-                        </>
-                      )}
-                      
-                      {!user && (
+                      <div className="px-3 py-2 border-t mt-4">
                         <Link 
                           to="/auth" 
                           onClick={() => setMobileMenuOpen(false)}
-                          className="mx-3"
+                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
                         >
-                          <Button variant="default" className="w-full justify-start">
-                            <User className="h-4 w-4 mr-2" />
-                            Sign In
-                          </Button>
+                          <User className="h-4 w-4" />
+                          <span>Authentication Demo</span>
                         </Link>
-                      )}
+                      </div>
                     </div>
                 </SheetContent>
               </Sheet>

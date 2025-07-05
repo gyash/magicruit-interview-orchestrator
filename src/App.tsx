@@ -27,36 +27,12 @@ const App = () => (
           <Layout>
             <Routes>
               <Route path="/auth" element={<Auth />} />
-              <Route path="/" element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/schedule" element={
-                <ProtectedRoute>
-                  <Schedule />
-                </ProtectedRoute>
-              } />
-              <Route path="/interviews" element={
-                <ProtectedRoute>
-                  <Interviews />
-                </ProtectedRoute>
-              } />
-              <Route path="/workflow" element={
-                <ProtectedRoute requiredRoles={['recruitment_coordinator', 'admin']}>
-                  <WorkflowBuilder />
-                </ProtectedRoute>
-              } />
-              <Route path="/analytics" element={
-                <ProtectedRoute requiredRoles={['recruitment_coordinator', 'admin']}>
-                  <Analytics />
-                </ProtectedRoute>
-              } />
-              <Route path="/settings" element={
-                <ProtectedRoute requiredRoles={['recruitment_coordinator', 'admin']}>
-                  <Settings />
-                </ProtectedRoute>
-              } />
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/schedule" element={<Schedule />} />
+              <Route path="/interviews" element={<Interviews />} />
+              <Route path="/workflow" element={<WorkflowBuilder />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/settings" element={<Settings />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
