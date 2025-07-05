@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Calendar, Clock, Users, TrendingUp, Search, Filter, Eye, Edit } from "lucide-react";
 import { mockInterviews, mockCandidates, mockJobs, getCandidateById, getJobById, formatInterviewerName } from "@/lib/mockData";
+import PanelistLoadChart from "@/components/PanelistLoadChart";
+import EdgeCaseAlerts from "@/components/EdgeCaseAlerts";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -223,6 +225,12 @@ const Dashboard = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Panelist Load Analytics */}
+      <PanelistLoadChart />
+
+      {/* Edge Case Management */}
+      <EdgeCaseAlerts />
     </div>
   );
 };

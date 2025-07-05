@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar, Clock, Users, Mail, Phone, MapPin, Video, Zap, ArrowRight, CheckCircle } from "lucide-react";
 import { mockJobs, mockCandidates, mockInterviewers, mockWorkflows, getWorkflowByJobId } from "@/lib/mockData";
 import { useToast } from "@/hooks/use-toast";
+import BulkScheduling from "@/components/BulkScheduling";
 
 const Schedule = () => {
   const { toast } = useToast();
@@ -417,6 +418,9 @@ const Schedule = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Bulk Scheduling */}
+      <BulkScheduling />
     </div>
   );
 };

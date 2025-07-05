@@ -8,11 +8,13 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, Clock, Users, Search, Filter, Eye, Edit, RotateCcw, MessageCircle, AlertTriangle } from "lucide-react";
 import { mockInterviews, mockCandidates, mockJobs, getCandidateById, getJobById, formatInterviewerName } from "@/lib/mockData";
+import RescheduleFlow from "@/components/RescheduleFlow";
 
 const Interviews = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedInterview, setSelectedInterview] = useState<any>(null);
+  const [rescheduleInterview, setRescheduleInterview] = useState<any>(null);
 
   // Filter interviews
   const filteredInterviews = mockInterviews.filter(interview => {
@@ -193,8 +195,12 @@ const Interviews = () => {
               Edit
             </Button>
             
-            {interview.status === 'cancelled' && (
-              <Button variant="outline" size="sm">
+            {(interview.status === 'cancelled' || interview.status === 'rescheduled') && (
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setRescheduleInterview(interview)}
+              >
                 <RotateCcw className="h-3 w-3 mr-1" />
                 Reschedule
               </Button>
@@ -352,6 +358,13 @@ const Interviews = () => {
           </Button>
         </div>
       )}
+
+      {/* Reschedule Flow */}
+      <RescheduleFlow 
+        interview={rescheduleInterview}
+        isOpen={!!rescheduleInterview}
+        onClose={() => setRescheduleInterview(null)}
+      />
     </div>
   );
 };
