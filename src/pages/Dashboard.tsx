@@ -9,6 +9,8 @@ import { Calendar, Clock, Users, TrendingUp, Search, Filter, Eye, Edit } from "l
 import { mockInterviews, mockCandidates, mockJobs, getCandidateById, getJobById, formatInterviewerName } from "@/lib/mockData";
 import PanelistLoadChart from "@/components/PanelistLoadChart";
 import EdgeCaseAlerts from "@/components/EdgeCaseAlerts";
+import ATSSyncManager from "@/components/ATSSyncManager";
+import MultiChannelMessaging from "@/components/MultiChannelMessaging";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -225,6 +227,18 @@ const Dashboard = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* ATS Integration */}
+      <ATSSyncManager 
+        onDataSynced={(data) => {
+          console.log("ATS Data synced:", data);
+        }}
+      />
+
+      {/* Communication Center */}
+      <MultiChannelMessaging 
+        interview={mockInterviews[0]}
+      />
 
       {/* Panelist Load Analytics */}
       <PanelistLoadChart />
