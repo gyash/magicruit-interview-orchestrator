@@ -8,6 +8,10 @@ import { SystemConfigTab } from "@/components/settings/SystemConfigTab";
 import { AccessControlTab } from "@/components/settings/AccessControlTab";
 import { NotificationsTab } from "@/components/settings/NotificationsTab";
 import { MasterAdminTab } from "@/components/settings/MasterAdminTab";
+import { CandidateExperienceTab } from "@/components/settings/CandidateExperienceTab";
+import { ComplianceSecurityTab } from "@/components/settings/ComplianceSecurityTab";
+import { WorkflowTemplatesTab } from "@/components/settings/WorkflowTemplatesTab";
+import { ReportingConfigTab } from "@/components/settings/ReportingConfigTab";
 
 const SettingsPage = () => {
   const { toast } = useToast();
@@ -102,13 +106,19 @@ const SettingsPage = () => {
       </div>
 
       <Tabs defaultValue="integrations" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="integrations">API Integrations</TabsTrigger>
-          <TabsTrigger value="system">System Config</TabsTrigger>
-          <TabsTrigger value="access">Access Control</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="admin">Master Admin</TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto">
+          <TabsList className="grid w-full min-w-max grid-cols-9 gap-1">
+            <TabsTrigger value="integrations" className="text-xs">Integrations</TabsTrigger>
+            <TabsTrigger value="system" className="text-xs">System</TabsTrigger>
+            <TabsTrigger value="access" className="text-xs">Access</TabsTrigger>
+            <TabsTrigger value="notifications" className="text-xs">Notifications</TabsTrigger>
+            <TabsTrigger value="candidate" className="text-xs">Candidate UX</TabsTrigger>
+            <TabsTrigger value="compliance" className="text-xs">Compliance</TabsTrigger>
+            <TabsTrigger value="templates" className="text-xs">Templates</TabsTrigger>
+            <TabsTrigger value="reporting" className="text-xs">Reporting</TabsTrigger>
+            <TabsTrigger value="admin" className="text-xs">Admin</TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* API Integrations Tab */}
         <TabsContent value="integrations">
@@ -137,6 +147,26 @@ const SettingsPage = () => {
         {/* Notifications Tab */}
         <TabsContent value="notifications">
           <NotificationsTab />
+        </TabsContent>
+
+        {/* Candidate Experience Tab */}
+        <TabsContent value="candidate">
+          <CandidateExperienceTab />
+        </TabsContent>
+
+        {/* Compliance & Security Tab */}
+        <TabsContent value="compliance">
+          <ComplianceSecurityTab />
+        </TabsContent>
+
+        {/* Workflow Templates Tab */}
+        <TabsContent value="templates">
+          <WorkflowTemplatesTab />
+        </TabsContent>
+
+        {/* Reporting Configuration Tab */}
+        <TabsContent value="reporting">
+          <ReportingConfigTab />
         </TabsContent>
 
         {/* Master Admin Tab */}

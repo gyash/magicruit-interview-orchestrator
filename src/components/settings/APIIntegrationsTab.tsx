@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MessageSquare } from "lucide-react";
+import { Calendar, MessageSquare, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface APIIntegrationsTabProps {
@@ -153,6 +153,106 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
         </CardContent>
       </Card>
 
+      {/* ATS Integrations */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Users className="h-5 w-5" />
+            ATS Integrations
+          </CardTitle>
+          <CardDescription>
+            Connect with Applicant Tracking Systems for seamless candidate flow
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Greenhouse */}
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="font-medium">Greenhouse</div>
+                <div className="text-sm text-muted-foreground">Sync candidates and workflows</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Switch
+                  checked={apiSettings.greenhouse?.enabled || false}
+                  onCheckedChange={(checked) => onApiSave('greenhouse', 'enabled', checked)}
+                />
+                <Badge variant={apiSettings.greenhouse?.enabled ? "default" : "secondary"}>
+                  {apiSettings.greenhouse?.enabled ? "Enabled" : "Disabled"}
+                </Badge>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>API Key</Label>
+                <Input
+                  type="password"
+                  placeholder="Greenhouse API Key"
+                  value={apiSettings.greenhouse?.api_key || ''}
+                  onChange={(e) => onApiSave('greenhouse', 'api_key', e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Webhook Secret</Label>
+                <Input
+                  type="password"
+                  placeholder="Webhook Secret"
+                  value={apiSettings.greenhouse?.webhook_secret || ''}
+                  onChange={(e) => onApiSave('greenhouse', 'webhook_secret', e.target.value)}
+                />
+              </div>
+            </div>
+            
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="mt-4"
+              onClick={() => testConnection('Greenhouse')}
+            >
+              Test Connection
+            </Button>
+          </div>
+
+          {/* Lever */}
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="font-medium">Lever</div>
+                <div className="text-sm text-muted-foreground">Import candidates and job postings</div>
+              </div>
+              <Switch />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input type="password" placeholder="Lever API Key" />
+              <Input placeholder="Webhook URL" />
+            </div>
+            
+            <Button variant="outline" size="sm" className="mt-4">Test Connection</Button>
+          </div>
+
+          {/* Workday */}
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="font-medium">Workday</div>
+                <div className="text-sm text-muted-foreground">Enterprise HRIS integration</div>
+              </div>
+              <Switch />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Input placeholder="Tenant URL" />
+              <Input placeholder="Username" />
+              <Input type="password" placeholder="Password" />
+            </div>
+            
+            <Button variant="outline" size="sm" className="mt-4">Test Connection</Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Communication Integrations */}
       <Card>
         <CardHeader>
@@ -161,10 +261,77 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
             Communication Channels
           </CardTitle>
           <CardDescription>
-            Setup WhatsApp, Slack and email notifications
+            Setup WhatsApp, Slack, Teams and email notifications
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
+          {/* Microsoft Teams */}
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="font-medium">Microsoft Teams</div>
+                <div className="text-sm text-muted-foreground">Enterprise video conferencing</div>
+              </div>
+              <Switch />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Input placeholder="Client ID" />
+              <Input type="password" placeholder="Client Secret" />
+              <Input placeholder="Tenant ID" />
+            </div>
+            
+            <Button variant="outline" size="sm" className="mt-4">Test Connection</Button>
+          </div>
+
+          {/* Slack Enhanced */}
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="font-medium">Slack</div>
+                <div className="text-sm text-muted-foreground">Team notifications and alerts</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Switch
+                  checked={apiSettings.slack?.enabled || false}
+                  onCheckedChange={(checked) => onApiSave('slack', 'enabled', checked)}
+                />
+                <Badge variant={apiSettings.slack?.enabled ? "default" : "secondary"}>
+                  {apiSettings.slack?.enabled ? "Enabled" : "Disabled"}
+                </Badge>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Bot Token</Label>
+                <Input
+                  type="password"
+                  placeholder="xoxb-your-bot-token"
+                  value={apiSettings.slack?.bot_token || ''}
+                  onChange={(e) => onApiSave('slack', 'bot_token', e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Webhook URL</Label>
+                <Input
+                  placeholder="https://hooks.slack.com/..."
+                  value={apiSettings.slack?.webhook_url || ''}
+                  onChange={(e) => onApiSave('slack', 'webhook_url', e.target.value)}
+                />
+              </div>
+            </div>
+            
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="mt-4"
+              onClick={() => testConnection('Slack')}
+            >
+              Test Connection
+            </Button>
+          </div>
+
           {/* WhatsApp Business */}
           <div className="p-4 border rounded-lg">
             <div className="flex items-center justify-between mb-4">
@@ -208,6 +375,53 @@ export function APIIntegrationsTab({ apiSettings, onApiSave }: APIIntegrationsTa
               size="sm" 
               className="mt-4"
               onClick={() => testConnection('WhatsApp')}
+            >
+              Test Connection
+            </Button>
+          </div>
+
+          {/* Outlook Calendar */}
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="font-medium">Outlook Calendar</div>
+                <div className="text-sm text-muted-foreground">Microsoft 365 calendar integration</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Switch
+                  checked={apiSettings.outlook_calendar?.enabled || false}
+                  onCheckedChange={(checked) => onApiSave('outlook_calendar', 'enabled', checked)}
+                />
+                <Badge variant={apiSettings.outlook_calendar?.enabled ? "default" : "secondary"}>
+                  {apiSettings.outlook_calendar?.enabled ? "Enabled" : "Disabled"}
+                </Badge>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Client ID</Label>
+                <Input
+                  placeholder="Microsoft App Client ID"
+                  value={apiSettings.outlook_calendar?.client_id || ''}
+                  onChange={(e) => onApiSave('outlook_calendar', 'client_id', e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Tenant ID</Label>
+                <Input
+                  placeholder="Azure AD Tenant ID"
+                  value={apiSettings.outlook_calendar?.tenant_id || ''}
+                  onChange={(e) => onApiSave('outlook_calendar', 'tenant_id', e.target.value)}
+                />
+              </div>
+            </div>
+            
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="mt-4"
+              onClick={() => testConnection('Outlook Calendar')}
             >
               Test Connection
             </Button>
