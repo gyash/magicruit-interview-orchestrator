@@ -121,14 +121,14 @@ export function NotificationDropdown() {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-96 p-0" align="end">
-        <div className="p-4 border-b">
+      <PopoverContent className="w-96 p-0 z-50 bg-background border shadow-lg" align="end" sideOffset={5}>
+        <div className="p-4 border-b bg-background">
           <h3 className="font-semibold">Updates & Actions</h3>
           <p className="text-xs text-muted-foreground">Stay on top of your recruitment workflow</p>
         </div>
         
         <Tabs defaultValue="notifications" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mx-4 mt-2">
+          <TabsList className="grid w-full grid-cols-2 mx-4 mt-2 bg-muted">
             <TabsTrigger value="notifications" className="relative">
               Notifications
               {unreadCount > 0 && (
@@ -141,7 +141,7 @@ export function NotificationDropdown() {
           </TabsList>
           
           <TabsContent value="notifications" className="mt-2">
-            <ScrollArea className="h-80">
+            <ScrollArea className="h-80 bg-background">
               <div className="space-y-1 p-2">
                 {mockNotifications.map((notification) => {
                   const Icon = notification.icon;
@@ -171,7 +171,7 @@ export function NotificationDropdown() {
               </div>
             </ScrollArea>
             <Separator />
-            <div className="p-2">
+            <div className="p-2 bg-background">
               <Button variant="ghost" className="w-full justify-between text-xs">
                 View All Notifications
                 <ArrowRight className="h-3 w-3" />
@@ -180,7 +180,7 @@ export function NotificationDropdown() {
           </TabsContent>
           
           <TabsContent value="actions" className="mt-2">
-            <ScrollArea className="h-80">
+            <ScrollArea className="h-80 bg-background">
               <div className="space-y-2 p-2">
                 {mockActions.map((action) => {
                   const Icon = action.icon;
@@ -215,7 +215,7 @@ export function NotificationDropdown() {
               </div>
             </ScrollArea>
             <Separator />
-            <div className="p-2">
+            <div className="p-2 bg-background">
               <Button variant="ghost" className="w-full justify-between text-xs">
                 View All Actions
                 <ArrowRight className="h-3 w-3" />
