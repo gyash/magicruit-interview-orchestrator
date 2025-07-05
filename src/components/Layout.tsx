@@ -18,6 +18,8 @@ const navigation = [
   { name: "Workflow Builder", href: "/workflow", icon: Settings },
   { name: "Schedule", href: "/schedule", icon: Calendar },
   { name: "Interviews", href: "/interviews", icon: Users },
+  { name: "Analytics", href: "/analytics", icon: BarChart3 },
+  { name: "Settings", href: "/settings", icon: Settings },
 ];
 
 interface LayoutProps {
